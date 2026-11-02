@@ -17,7 +17,7 @@ parts.
 | Layout / drawable / values XML | 10 files | **0** (programmatic UI; `res/` = icons only) |
 | SFX cache WAVs | rewritten every launch | **written once** |
 | Event drain | allocates per frame | **zero-allocation swap buffer** |
-| APK | ~168 KB | expected similar or smaller (CI builds it) |
+| APK | ~168 KB | **160 KB** (measured; CI artifact `Jumper-APK`) |
 
 The complete reverse-engineering analysis behind this rebuild — architecture,
 physics, landing rules, rendering, audio, build/signing, and every quirk found

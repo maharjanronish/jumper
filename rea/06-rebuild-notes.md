@@ -57,6 +57,12 @@ JVM by `test/LogicTest.java` — no emulator needed.
 App identity changes (so both games can coexist): package
 `io.github.maharjanronish.jumper`, label **"Jumper"**, prefs file `"jumper"`.
 
+## Measured result
+
+The CI-built APK is **160 KB** (vs the original's ~168 KB), with zero XML UI,
+one sprite atlas, and ~5 draw calls per frame — signed by the committed
+keystore, so every future build updates in place.
+
 ## Verification
 
 `test/LogicTest.java` (desktop JVM, no Android) ports the original 34-check
