@@ -3,14 +3,18 @@ name: Build APK
 on:
   push:
     branches: [main, master]
-    tags: ["v*"]
+    tags: ['v*']
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -18,23 +22,26 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Ensure build-tools 35 + platform 34
+        run: |
+          yes | sdkmanager "build-tools;35.0.0" "platforms;android-34" > /dev/null || true
 
-      - name: Install build-tools (d8 fix for enums)
-        run: sdkmanager "build-tools;35.0.0" "platforms;android-34" >/dev/null
-
-      - name: Build Jumper.apk
-        run: bash scripts/build_apk.sh
+      - name: Build signed APK
+        run: |
+          chmod +x scripts/build_apk.sh
+          scripts/build_apk.sh
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Jumper.apk
+          name: Jumper-APK
           path: Jumper.apk
 
-      - name: Release on tags
+      - name: Create release (tags only)
         if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v2
-        with:
-          files: Jumper.apk
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF#refs/tags/}" Jumper.apk \
+            --title "Jumper ${GITHUB_REF#refs/tags/v}" \
+            --generate-notes || true
