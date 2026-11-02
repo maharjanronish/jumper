@@ -1,0 +1,21 @@
+# build outputs
+build/
+out/
+.gradle/
+local.properties
+*.apk
+*.dex
+classes.zip
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# keys (signing.keystore IS committed on purpose: signature-stable CI builds,
+# exactly like the upstream jumpjump repo; there are no secrets to protect)
+*.jks
+!signing.keystore
+
+# OS
+.DS_Store

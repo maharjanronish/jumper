@@ -1,0 +1,33 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'io.github.maharjanronish.jumper'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "io.github.maharjanronish.jumper"
+        minSdk 21
+        targetSdk 34
+        // Single source of truth: scripts/build_apk.sh defaults to the same
+        // values (the original repo shipped stale Gradle versions - see
+        // rea/05-build-signing.md).
+        versionCode 1
+        versionName "1.0.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false   // no dependencies: the APK is tiny anyway
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+// No dependencies at all - that is the point. :)
+dependencies { }

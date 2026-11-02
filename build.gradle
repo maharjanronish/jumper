@@ -1,0 +1,4 @@
+// Root build file. The project has ZERO external dependencies.
+plugins {
+    id 'com.android.application' version '7.4.2' apply false
+}
