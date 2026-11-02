@@ -69,12 +69,12 @@ echo "[4/6] dexing (d8)"
 "$BT/d8" --release --min-api 21 --lib "$PLATFORM" \
   --output "$OUT/dex" "$OUT/classes.zip"
 
-echo("[5/6] packaging + aligning")
+echo "[5/6] packaging + aligning"
 cp "$OUT/base.apk" "$OUT/unsigned.apk"
 (cd "$OUT" && zip -qj unsigned.apk dex/classes.dex)
 "$BT/zipalign" -f 4 "$OUT/unsigned.apk" "$OUT/aligned.apk"
 
-echo("[6/6] signing")
+echo "[6/6] signing"
 KEYSTORE="${JUMPER_KEYSTORE:-$PROJECT/signing.keystore}"
 KEYSTORE_DIR="$(dirname "$KEYSTORE")"
 mkdir -p "$KEYSTORE_DIR"
